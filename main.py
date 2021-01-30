@@ -59,6 +59,10 @@ def main():
     clock = pygame.time.Clock()
 
     while flag:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
         pygame.time.delay(50)
         clock.tick(10)
 
