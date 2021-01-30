@@ -1,19 +1,26 @@
-import pygame, sys
-import random
-import tkinter as tk
-import numpy as np
+import pygame
+import sys
+
 
 class cube(object):
     def __init__(self, start, dirx=1, diry=0, colour=(255,0,0)):
 
     def move(self, dirx, diry):
 
-    def draw(self, canvas, eyes=False):
         pass
+    def draw(self, window, eyes=False):
 
 
 class snake(object):
+    body = []
+    turns = {}
     def __init__(self, colour, pos):
+        self.colour = colour
+        self.head = cube(pos)
+        self.body.append(self.head)
+        self.dirx = 0
+        self.diry = 1
+
     def move(self):
     def reset(self):
         pass
@@ -21,10 +28,10 @@ class snake(object):
     def eat(self):
         pass
 
-    def draw(self):
         pass
+    def draw(self, window):
 
-def drawBoard(width, rows, canvas):
+def drawBoard(width, rows, window):
     sizeBtwn = width//rows
     x = 0
     y = 0
@@ -32,13 +39,14 @@ def drawBoard(width, rows, canvas):
         x = x + sizeBtwn
         y = y + sizeBtwn
 
-        pygame.draw.line(canvas, (255,255,255), (x,0), (x,width))
-        pygame.draw.line(canvas, (255,255,255), (0,y), (width,y))
+        pygame.draw.line(window, (255,255,255), (x,0), (x,width))
+        pygame.draw.line(window, (255,255,255), (0,y), (width,y))
 
 
-def redrawWindow(canvas):
-    canvas.fill((0,0,0))
-    drawBoard(size, rows, canvas)
+def redrawWindow(window):
+    window.fill((0,0,0))
+    s.draw(window)
+    drawBoard(size, rows, window)
     pygame.display.update()
 
 def randomFood():
@@ -48,7 +56,7 @@ def message():
     pass
 
 def main():
-    global size, rows
+    global size, rows, s
     size = 600
     rows = 20
     pygame.init()
