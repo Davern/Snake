@@ -1,21 +1,18 @@
 import pygame, sys
 import random
 import tkinter as tk
-import numpy as np 
+import numpy as np
 
 class cube(object):
     def __init__(self, start, dirx=1, diry=0, colour=(255,0,0)):
 
     def move(self, dirx, diry):
 
-class Food(object):
-    def __init__(self):
     def draw(self, canvas, eyes=False):
         pass
 
 
-class Snake(object):
-    def __init__(self):
+class snake(object):
     def __init__(self, colour, pos):
     def move(self):
     def reset(self):
