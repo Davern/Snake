@@ -75,9 +75,11 @@ class snake(object):
         
 
     def reset(self):
+        #TODO
         pass
 
     def eat(self):
+        #TODO
         pass
 
     def draw(self, window):
@@ -106,9 +108,11 @@ def redrawWindow(window):
     pygame.display.update()
 
 def randomFood():
+    #TODO
     pass
 
 def message():
+    #TODO
     pass
 
 def main():
