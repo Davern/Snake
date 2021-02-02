@@ -4,11 +4,22 @@ import sys
 
 class cube(object):
     def __init__(self, start, dirx=1, diry=0, colour=(255,0,0)):
+        self.pos = start
+        self.dirx = 1
+        self.diry = 0
+        self.colour = colour
 
     def move(self, dirx, diry):
+        self.dirx = dirx
+        self.diry = diry
+        self.pos = (self.pos[0] + self.dirx, self.pos[1] + self.diry)
 
-        pass
     def draw(self, window, eyes=False):
+        dis = size // rows
+        i = self.pos[0]
+        j = self.pos[1]
+
+        pygame.draw.rect(window, self.colour, (i*dis+1, j*dis+1, dis-2, dis-2))
 
 
 class snake(object):
@@ -69,8 +80,12 @@ class snake(object):
     def eat(self):
         pass
 
-        pass
     def draw(self, window):
+        for i, c in enumerate(self.body):
+            if i == 0:
+                c.draw(window, True)
+            else:
+                c.draw(window)
 
 def drawBoard(width, rows, window):
     sizeBtwn = width//rows
