@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 
 class cube(object):
@@ -115,9 +116,16 @@ def redrawWindow(window):
     drawBoard(size, rows, window)
     pygame.display.update()
 
-def randomFood():
-    #TODO
-    pass
+def randomFood(rows, item):
+    pos = item.body
+    while True:
+        x = random.randrange(rows)
+        y = random.randrange(rows)
+        if len(list(filter(lamda z:z.pos == (x,y), pos))) > 0:
+            continue 
+        else:
+            break
+    return (x,y)
 
 def message():
     #TODO
