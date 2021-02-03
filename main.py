@@ -1,6 +1,8 @@
 import pygame
 import sys
 import random
+import tkinter as tk
+from tkinter import messagebox
 
 
 class cube(object):
@@ -83,9 +85,12 @@ class snake(object):
 
         
 
-    def reset(self):
-        #TODO
-        pass
+    def reset(self, pos):
+        self.head = cube(pos)
+        self.body = []
+        self.body.append(self.head)
+        self.dirx = 0
+        self.diry = 1
 
     def eat(self):
         tail = self.body[-1]
@@ -140,10 +145,15 @@ def randomFood(rows, item):
             break
     return (x,y)
 
-def message():
-    #TODO
-    pass
-
+def message(subject, content):
+    root = tk.Tk()
+    root.attributes("-topmost", True)
+    root.withdraw()
+    messagebox.showinfo(subject, content)
+    try:
+        root.destroy()
+    except:
+        pass
 def main():
     global size, rows, s, food
     size = 600
@@ -163,6 +173,14 @@ def main():
         if s.body[0].pos == food.pos:
             s.eat()
             food = cube(randomFood(rows, s), colour=(0,255,0))
+        
+        for x in range(len(s.body)):
+            if s.body[x].pos in list(map(lambda z:z.pos, s.body[x+1:])):
+                print('Score: ', len(s.body))
+                score  =  str(len(s.body))
+                message('You Lost!', 'Your score was: ' + score +  '\n Please try again!')
+                s.reset((10,10))
+                break
         redrawWindow(window)
 
 main()
