@@ -88,8 +88,20 @@ class snake(object):
         pass
 
     def eat(self):
-        #TODO
-        pass
+        tail = self.body[-1]
+        dx, dy = tail.dirx, tail.diry
+
+        if dx == 1 and dy == 0:
+            self.body.append(cube((tail.pos[0]-1, tail.pos[1])))
+        elif dx == -1 and dy == 0:
+            self.body.append(cube((tail.pos[0]+1, tail.pos[1])))
+        elif dx == 0 and dy == 1:
+            self.body.append(cube((tail.pos[0], tail.pos[1]-1)))
+        elif dx == 0 and dy == -1:
+            self.body.append(cube((tail.pos[0], tail.pos[1]+1)))
+
+        self.body[-1].dirx = dx
+        self.body[-1].diry = dy
 
     def draw(self, window):
         for i, c in enumerate(self.body):
@@ -113,6 +125,7 @@ def drawBoard(width, rows, window):
 def redrawWindow(window):
     window.fill((0,0,0))
     s.draw(window)
+    food.draw(window)
     drawBoard(size, rows, window)
     pygame.display.update()
 
@@ -121,7 +134,7 @@ def randomFood(rows, item):
     while True:
         x = random.randrange(rows)
         y = random.randrange(rows)
-        if len(list(filter(lamda z:z.pos == (x,y), pos))) > 0:
+        if len(list(filter(lambda z:z.pos == (x,y), pos))) > 0:
             continue 
         else:
             break
@@ -132,12 +145,13 @@ def message():
     pass
 
 def main():
-    global size, rows, s
+    global size, rows, s, food
     size = 600
     rows = 20
     pygame.init()
     window = pygame.display.set_mode((size,size))
     s = snake((255,0,0), (10,10))
+    food = cube(randomFood(rows, s), colour=(0,255,0))
     flag = True
 
     clock = pygame.time.Clock()
@@ -146,6 +160,9 @@ def main():
         pygame.time.delay(50)
         clock.tick(10)
         s.move()
+        if s.body[0].pos == food.pos:
+            s.eat()
+            food = cube(randomFood(rows, s), colour=(0,255,0))
         redrawWindow(window)
 
 main()
