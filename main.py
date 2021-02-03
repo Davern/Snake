@@ -3,6 +3,7 @@ import sys
 
 
 class cube(object):
+    rows = 20
     def __init__(self, start, dirx=1, diry=0, colour=(255,0,0)):
         self.pos = start
         self.dirx = 1
@@ -20,6 +21,13 @@ class cube(object):
         j = self.pos[1]
 
         pygame.draw.rect(window, self.colour, (i*dis+1, j*dis+1, dis-2, dis-2))
+        if eyes:
+            centre = dis//2
+            radius = 3
+            circleMiddle = (i*dis+centre-radius, j*dis+8)
+            circleMiddle2 = (i*dis + dis - radius*2, j*dis+8)
+            pygame.draw.circle(window, (0,0,0), circleMiddle, radius)
+            pygame.draw.circle(window, (0,0,0), circleMiddle2, radius)
 
 
 class snake(object):
@@ -51,11 +59,11 @@ class snake(object):
                     self.turns[self.head.pos[:]] = [self.dirx, self.diry]
                 elif keys[pygame.K_DOWN]:
                     self.dirx = 0
-                    self.diry = -1
+                    self.diry = 1
                     self.turns[self.head.pos[:]] = [self.dirx, self.diry]
                 elif keys[pygame.K_UP]:
                     self.dirx = 0
-                    self.diry = 1
+                    self.diry = -1
                     self.turns[self.head.pos[:]] = [self.dirx, self.diry]
 
         for i, c in enumerate(self.body):
@@ -127,13 +135,9 @@ def main():
     clock = pygame.time.Clock()
 
     while flag:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
         pygame.time.delay(50)
         clock.tick(10)
-
+        s.move()
         redrawWindow(window)
 
 main()
